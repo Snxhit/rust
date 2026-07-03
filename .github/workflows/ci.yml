@@ -169,6 +169,10 @@ jobs:
       - name: install sccache
         run: src/ci/scripts/install-sccache.sh
 
+      - name: install cdb
+        run: winget install --id Microsoft.WindowsSDK.10.0.26100 --disable-interactivity --no-upgrade --accept-package-agreements --source winget --override "/q /features OptionId.WindowsDesktopDebuggers" || if [ $? -ne 97 ]; then exit $? fi
+        if: contains(matrix.full_name, 'msvc')
+
       - name: install clang
         run: src/ci/scripts/install-clang.sh
 
