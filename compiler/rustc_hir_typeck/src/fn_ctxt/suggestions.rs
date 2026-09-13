@@ -2610,6 +2610,10 @@ impl<'a, 'tcx> FnCtxt<'a, 'tcx> {
                 return true;
             }
 
+            ExprKind::MethodCall(path_segment, ..) if path_segment.ident.name == sym::to_string => {
+                return false;
+            }
+
             // Ignore binary and unary ops, currently out of scope
             ExprKind::Binary(_, _, _) | ExprKind::Unary(_, _) => return false,
 
